@@ -1,7 +1,8 @@
-package cn.loach.client.service;
+package cn.loach.client.service.singleMessage.impl;
 
 import cn.loach.client.enums.MessageContentTypeEnum;
 import cn.loach.client.message.request.SingleChatRequestMessage;
+import cn.loach.client.service.singleMessage.SingleMessageService;
 
 import java.util.UUID;
 
