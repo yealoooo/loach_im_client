@@ -21,7 +21,7 @@ public class ClientMenuHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
 
-        System.out.println("请输入登录用户名");
+        System.out.println("请输入您的登录用户名");
         String userName = scanner.next();
 
         LoginAuthRequestMessage loginAuthRequestMessage = loginAuthService.login(userName);
