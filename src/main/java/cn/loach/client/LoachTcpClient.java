@@ -2,6 +2,7 @@ package cn.loach.client;
 
 import cn.loach.client.handler.ClientMenuHandler;
 import cn.loach.client.handler.LengthFieldFrameProtocolHandler;
+import cn.loach.client.handler.LoginAuthResponseHandler;
 import cn.loach.client.protocol.MessageDecoder;
 import cn.loach.client.protocol.MessageEcoder;
 import io.netty.bootstrap.Bootstrap;
@@ -30,6 +31,7 @@ public class LoachTcpClient implements LoachTcpClientInterface {
                     ch.pipeline().addLast(new LengthFieldFrameProtocolHandler());
                     ch.pipeline().addLast(new MessageDecoder());
                     ch.pipeline().addLast(new MessageEcoder());
+                    ch.pipeline().addLast(new LoginAuthResponseHandler());
                     ch.pipeline().addLast("client handler", new ClientMenuHandler());
                 }
             });

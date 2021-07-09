@@ -6,8 +6,6 @@ import lombok.Getter;
 
 import java.io.Serializable;
 
-import static cn.loach.client.message.Message.SINGLE_CHAT_MESSAGE_REQUEST_TYPE;
-
 @Getter
 @AllArgsConstructor
 public class SingleChatRequestMessage extends RequestMessage implements Serializable {

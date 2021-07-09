@@ -1,5 +1,6 @@
 package cn.loach.client.handler;
 
+import cn.loach.client.message.request.LoginAuthRequestMessage;
 import cn.loach.client.message.request.SingleChatRequestMessage;
 import cn.loach.client.service.loginAuth.LoginAuthService;
 import cn.loach.client.service.loginAuth.impl.LoginAuthServiceImpl;
@@ -23,21 +24,8 @@ public class ClientMenuHandler extends ChannelInboundHandlerAdapter {
         System.out.println("请输入登录用户名");
         String userName = scanner.next();
 
-        loginAuthService.login(userName);
-
-        new Thread(() -> {
-            while (true) {
-                System.out.println("请输入需要发送的消息");
-                String next = scanner.next();
-
-                SingleMessageServiceIMpl singleMessageServiceIMpl = SingleMessageServiceIMpl.getInstance();
-                SingleChatRequestMessage sendMessage = singleMessageServiceIMpl.getSendMessageModel(next);
-                sendMessage.setFromId("123");
-                sendMessage.setToId("456");
-
-                ctx.writeAndFlush(sendMessage);
-            }
-        }, "client handler thread").start();
+        LoginAuthRequestMessage loginAuthRequestMessage = loginAuthService.login(userName);
+        ctx.writeAndFlush(loginAuthRequestMessage);
     }
 
     @Override

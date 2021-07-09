@@ -13,12 +13,6 @@ public class LoginAuthRequestMessage extends RequestMessage implements Serializa
      * 用户名
      */
     private String userName;
-
-    /**
-     * token
-     */
-    private String token;
-
     public LoginAuthRequestMessage() {
         setMessageRequestTypeType(LOGIN_AUTH_MESSAGE_REQUEST_TYPE);
     }
