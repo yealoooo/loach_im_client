@@ -7,10 +7,14 @@ import com.alibaba.fastjson.JSON;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class LoginAuthResponseHandler extends SimpleChannelInboundHandler<LoginAuthResponseMessage> {
     Scanner scanner = new Scanner(System.in);
+
+    public static final Map<String, Object> userDataMap = new HashMap<>();
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginAuthResponseMessage msg) {
@@ -21,13 +25,14 @@ public class LoginAuthResponseHandler extends SimpleChannelInboundHandler<LoginA
 
             new Thread(() -> {
                 while (true) {
-                    System.out.println("请输入需要发送的消息");
+                    System.out.println("请输入需要发送的消息和目标逗号分割");
                     String next = scanner.next();
 
+                    String[] inData = next.split(",");
                     SingleMessageServiceIMpl singleMessageServiceIMpl = SingleMessageServiceIMpl.getInstance();
-                    SingleChatRequestMessage sendMessage = singleMessageServiceIMpl.getSendMessageModel(next);
-                    sendMessage.setFromId("123");
-                    sendMessage.setToId("456");
+                    SingleChatRequestMessage sendMessage = singleMessageServiceIMpl.getSendMessageModel(inData[1]);
+                    sendMessage.setFromId(userDataMap.get("userId").toString());
+                    sendMessage.setToId(inData[0]);
 
                     ctx.writeAndFlush(sendMessage);
                 }
