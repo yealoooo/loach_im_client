@@ -1,6 +1,8 @@
 package cn.loach.client.message.request;
 
 
+import cn.loach.client.enums.MessageContentTypeEnum;
+import cn.loach.util.MessageIdGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -25,7 +27,10 @@ public class SingleChatRequestMessage extends RequestMessage implements Serializ
     }
 
     public SingleChatRequestMessage() {
-        setMessageRequestTypeType(SINGLE_CHAT_MESSAGE_REQUEST_TYPE);
+        setTimeStamp(System.currentTimeMillis());
+        setContentType(MessageContentTypeEnum.TEXT);
+        setMessageId(MessageIdGenerator.getMessageId());
+        setMessageRequestTypeType(LOGIN_AUTH_MESSAGE_REQUEST_TYPE);
     }
 
     public void setContent(String content) {

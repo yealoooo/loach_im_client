@@ -24,11 +24,8 @@ public class SingleMessageServiceIMpl implements SingleMessageService {
 
     @Override
     public SingleChatRequestMessage getSendMessageModel(String message) {
-
         SingleChatRequestMessage singleChatMessage = new SingleChatRequestMessage();
-        singleChatMessage.setMessageId(UUID.randomUUID().toString().toUpperCase().replace("-", ""));
         singleChatMessage.setContent(message);
-        singleChatMessage.setContentType(MessageContentTypeEnum.TEXT);
 
         return singleChatMessage;
     }

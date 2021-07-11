@@ -31,9 +31,7 @@ public class LoginAuthResponseHandler extends SimpleChannelInboundHandler<LoginA
                     String[] inData = next.split(",");
                     SingleMessageServiceIMpl singleMessageServiceIMpl = SingleMessageServiceIMpl.getInstance();
                     SingleChatRequestMessage sendMessage = singleMessageServiceIMpl.getSendMessageModel(inData[1]);
-                    sendMessage.setFromId(userDataMap.get("userId").toString());
                     sendMessage.setToId(inData[0]);
-
                     ctx.writeAndFlush(sendMessage);
                 }
             }, "client handler thread").start();
