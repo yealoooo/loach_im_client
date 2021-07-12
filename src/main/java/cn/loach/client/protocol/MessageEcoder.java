@@ -31,14 +31,12 @@ public class MessageEcoder extends MessageToByteEncoder<Message> {
     protected void encode(ChannelHandlerContext ctx, Message message, ByteBuf byteBuf) {
         // 定义 魔数表示  4字节
         byteBuf.writeInt(magicNum);
-        // 定义 消息版本  1字节
-        byteBuf.writeByte(messageVersion);
-        // 定义 序列化方式 1字节
-        byteBuf.writeByte(serializableType);
+        // 定义 消息版本  4字节
+        byteBuf.writeInt(messageVersion);
+        // 定义 序列化方式 4字节
+        byteBuf.writeInt(serializableType);
         // 定义 消息类型   4字节
         byteBuf.writeInt(message.getMessageRequestTypeType());
-        // 定义消息唯一标识 32字节
-        byteBuf.writeBytes(message.getMessageId().getBytes(StandardCharsets.UTF_8));
         // 获取内容的字节数组
         byte[] dataBytes = LoachSerializable
                 .getSerializable(serializableType)
