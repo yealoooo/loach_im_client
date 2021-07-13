@@ -7,6 +7,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> list) {
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> list) throws UnsupportedEncodingException {
         int magicNum = in.readInt();
 
         int version = in.readInt();
