@@ -12,6 +12,5 @@ public class SingleChatResponseMessage extends ResponseMessage{
     private String content;
 
     public SingleChatResponseMessage() {
-        setMessageRequestTypeType(SINGLE_CHAT_MESSAGE_RESPONSE_TYPE);
     }
 }

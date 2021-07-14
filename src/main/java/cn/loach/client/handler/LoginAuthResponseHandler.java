@@ -23,18 +23,7 @@ public class LoginAuthResponseHandler extends SimpleChannelInboundHandler<LoginA
 
             System.out.println("返回信息: " + JSON.toJSONString(msg));
 
-            new Thread(() -> {
-                while (true) {
-                    System.out.println("请输入需要发送的消息和目标逗号分割");
-                    String next = scanner.next();
 
-                    String[] inData = next.split(",");
-                    SingleMessageServiceIMpl singleMessageServiceIMpl = SingleMessageServiceIMpl.getInstance();
-                    SingleChatRequestMessage sendMessage = singleMessageServiceIMpl.getSendMessageModel(inData[1]);
-                    sendMessage.setToId(inData[0]);
-                    ctx.writeAndFlush(sendMessage);
-                }
-            }, "client handler thread").start();
         }
     }
 }

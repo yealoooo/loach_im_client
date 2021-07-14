@@ -8,6 +8,7 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -43,5 +44,12 @@ public class MessageDecoder extends ByteToMessageDecoder {
         log.debug("{}, {}, {}, {}, {}", magicNum, version, serializerType, messageRequestTypeType, length);
         log.debug("requestMessage: {}", message);
         list.add(message);
+    }
+
+    public static void main(String[] args) {
+        System.out.println((88886652 >> 24) & 0xff );
+        System.out.println((88886652 >> 16) & 0xff );
+        System.out.println((88886652 >> 8) & 0xff );
+        System.out.println((88886652) & 0xff );
     }
 }
