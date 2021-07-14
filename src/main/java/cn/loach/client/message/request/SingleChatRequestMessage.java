@@ -30,7 +30,6 @@ public class SingleChatRequestMessage extends RequestMessage implements Serializ
         setTimeStamp(System.currentTimeMillis());
         setContentType(MessageContentTypeEnum.TEXT);
         setMessageId(MessageIdGenerator.getMessageId());
-        setMessageRequestTypeType(LOGIN_AUTH_MESSAGE_REQUEST_TYPE);
     }
 
     public void setContent(String content) {

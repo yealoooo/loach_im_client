@@ -19,6 +19,5 @@ public class LoginAuthRequestMessage extends RequestMessage implements Serializa
         setTimeStamp(System.currentTimeMillis());
         setContentType(MessageContentTypeEnum.TEXT);
         setMessageId(MessageIdGenerator.getMessageId());
-        setMessageRequestTypeType(LOGIN_AUTH_MESSAGE_REQUEST_TYPE);
     }
 }

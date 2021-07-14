@@ -32,7 +32,7 @@ public class LoachTcpClient implements LoachTcpClientInterface {
                     ch.pipeline().addLast(new LengthFieldFrameProtocolHandler());
                     ch.pipeline().addLast(new MessageDecoder());
                     ch.pipeline().addLast(new MessageEcoder());
-                    ch.pipeline().addLast(new LoginAuthResponseHandler());
+//                    ch.pipeline().addLast(new LoginAuthResponseHandler());
                     ch.pipeline().addLast(new SingleMessageResponseHandler());
                     ch.pipeline().addLast("client handler", new ClientMenuHandler());
                 }

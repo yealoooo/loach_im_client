@@ -20,6 +20,5 @@ public class LoginAuthResponseMessage extends ResponseMessage implements Seriali
     private String token;
 
     public LoginAuthResponseMessage() {
-        setMessageRequestTypeType(LOGIN_AUTH_MESSAGE_RESPONSE_TYPE);
     }
 }
