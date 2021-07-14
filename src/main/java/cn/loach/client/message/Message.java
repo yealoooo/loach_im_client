@@ -36,6 +36,7 @@ public abstract class Message implements Serializable {
      */
     public static final int SINGLE_CHAT_MESSAGE_REQUEST_TYPE = 1;  // 一对一聊天发送
     public static final int SINGLE_CHAT_MESSAGE_RESPONSE_TYPE = 2; // 一对一聊天接收
+    public static final int SINGLE_CHAT_MESSAGE_1_TYPE = 2; // 一对一聊天接收
 
     public static final int LOGIN_AUTH_MESSAGE_REQUEST_TYPE = 3;
     public static final int LOGIN_AUTH_MESSAGE_RESPONSE_TYPE = 4;
