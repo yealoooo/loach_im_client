@@ -4,5 +4,5 @@ import cn.loach.client.message.request.LoginAuthRequestMessage;
 
 public interface LoginAuthService {
 
-    LoginAuthRequestMessage login(String userName);
+    LoginAuthRequestMessage login(String token);
 }

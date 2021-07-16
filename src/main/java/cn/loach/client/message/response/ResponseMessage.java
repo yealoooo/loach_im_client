@@ -1,5 +1,6 @@
 package cn.loach.client.message.response;
 
+import cn.loach.client.enums.MessageContentTypeEnum;
 import cn.loach.client.message.Message;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,32 +26,13 @@ public class ResponseMessage extends Message {
      */
     private boolean requestFlag;
 
+    /**
+     * 数据类型
+     */
+    private int contentType;
 
-    private ResponseMessage(int code, String responseMessage, boolean requestFlag) {
-        this.code = code;
-        this.responseMessage = responseMessage;
-        this.requestFlag = requestFlag;
+
+    public void setContentType(MessageContentTypeEnum messageContentTypeEnum) {
+        this.contentType = messageContentTypeEnum.ordinal();
     }
-
-    private static ResponseMessage success(int code, String responseMessage, Message responseContent) {
-        return new ResponseMessage(code, responseMessage, true);
-    }
-
-    public static ResponseMessage success(int code, String responseMessage) {
-        return success(code, responseMessage, null);
-    }
-
-    public static ResponseMessage success(Message responseContent) {
-        return success(200, "request success", responseContent);
-    }
-
-    public static ResponseMessage error(int code, String responseMessage) {
-        return new ResponseMessage(code, responseMessage, false);
-    }
-
-    public static ResponseMessage error() {
-        return error(500, "request error");
-    }
-
-
 }

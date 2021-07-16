@@ -5,6 +5,7 @@ import cn.loach.client.message.request.SingleChatRequestMessage;
 import cn.loach.client.message.response.LoginAuthResponseMessage;
 import cn.loach.client.message.response.SingleChatResponseMessage;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -15,6 +16,7 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public abstract class Message implements Serializable {
 
     /**
@@ -54,24 +56,31 @@ public abstract class Message implements Serializable {
 
 
     /**
-     * SINGLE + MESSAGE_REQUEST_TYPE  = (1 + 1) = 2   一对一发送
-     * SINGLE + MESSAGE_RESPONSE_TYPE  = (1 + 2) = 3   一对一发送
+     * SINGLE + MESSAGE_REQUEST_TYPE  = (1 << 8) | 1    一对一发送
+     * SINGLE + MESSAGE_RESPONSE_TYPE  = (1 << 8) | 2   一对一接收
      *
-     * GROUP + MESSAGE_REQUEST_TYPE  = (2 + 1) = 3   群组发送
-     * GROUP + MESSAGE_RESPONSE_TYPE  = (2 + 2) = 4   群组接收
+     * GROUP + MESSAGE_REQUEST_TYPE  = (2 << 8) | 1   群组发送
+     * GROUP + MESSAGE_RESPONSE_TYPE  = (2 << 8) | 2   群组接收
      *
-     * SINGLE + MESSAGE_RETRACT_TYPE  = (1 + 3) = 4   单聊撤回
-     * SINGLE + MESSAGE_READ_TYPE  = (1 + 4) = 5   单聊已读
+     * SINGLE + MESSAGE_RETRACT_TYPE  = (1 << 8) | 3   单聊撤回
+     * SINGLE + MESSAGE_READ_TYPE  = (1 << 8) | 4   单聊已读
      *
-     * GROUP + MESSAGE_READ_TYPE  = (2 + 3) = 5   群组撤回
-     * GROUP + MESSAGE_READ_TYPE  = (2 + 4) = 6   群组接收
+     * GROUP + MESSAGE_READ_TYPE  = (2 << 8) | 3   群组撤回
+     * GROUP + MESSAGE_READ_TYPE  = (2 << 8) | 4   群组已读
      */
 
 
     public static final Map<Integer, Class<? extends Message>> messageClassMap = new HashMap<>();
 
     static {
-        messageClassMap.put((SINGLE * 10) + MESSAGE_REQUEST_TYPE, SingleChatRequestMessage.class);
-        messageClassMap.put((SINGLE * 10) + MESSAGE_RESPONSE_TYPE, SingleChatResponseMessage.class);
+        // 认证
+        messageClassMap.put((AUTH << 8) | MESSAGE_REQUEST_TYPE, LoginAuthRequestMessage.class);
+        messageClassMap.put((AUTH << 8) | MESSAGE_RESPONSE_TYPE, LoginAuthResponseMessage.class);
+        // 一对一
+        messageClassMap.put((SINGLE << 8) | MESSAGE_REQUEST_TYPE, SingleChatRequestMessage.class);
+        messageClassMap.put((SINGLE << 8) | MESSAGE_RESPONSE_TYPE, SingleChatResponseMessage.class);
+        // 群组
+//        messageClassMap.put((GROUP << 8) | MESSAGE_REQUEST_TYPE, SingleChatRequestMessage.class);
+//        messageClassMap.put((GROUP << 8) | MESSAGE_RESPONSE_TYPE, SingleChatResponseMessage.class);
     }
 }

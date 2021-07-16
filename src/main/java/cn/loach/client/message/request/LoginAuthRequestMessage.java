@@ -1,7 +1,5 @@
 package cn.loach.client.message.request;
 
-import cn.loach.client.enums.MessageContentTypeEnum;
-import cn.loach.util.MessageIdGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,12 +10,12 @@ import java.io.Serializable;
 public class LoginAuthRequestMessage extends RequestMessage implements Serializable {
 
     /**
-     * 用户名
+     * token
      */
-    private String userName;
+    private String authToken;
+
     public LoginAuthRequestMessage() {
-        setTimeStamp(System.currentTimeMillis());
-        setContentType(MessageContentTypeEnum.TEXT);
-        setMessageId(MessageIdGenerator.getMessageId());
+        setChatType(AUTH);
+        setMessageType(MESSAGE_REQUEST_TYPE);
     }
 }

@@ -14,14 +14,25 @@ import java.util.Scanner;
 public class LoginAuthResponseHandler extends SimpleChannelInboundHandler<LoginAuthResponseMessage> {
     Scanner scanner = new Scanner(System.in);
 
-    public static final Map<String, Object> userDataMap = new HashMap<>();
-
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginAuthResponseMessage msg) {
         if (msg.getCode() == 200) {
             System.out.println("登录成功--------------------");
 
             System.out.println("返回信息: " + JSON.toJSONString(msg));
+            new Thread(() -> {
+                while (true) {
+                    System.out.println("请输入需要发送的消息和目标逗号分割");
+                    String next = scanner.next();
+
+                    String[] inData = next.split(",");
+                    SingleMessageServiceIMpl singleMessageServiceIMpl = SingleMessageServiceIMpl.getInstance();
+                    SingleChatRequestMessage sendMessage = singleMessageServiceIMpl.getSendMessageModel(inData[1]);
+                    sendMessage.setFromUid("token2");
+                    sendMessage.setToUid(inData[0]);
+                    ctx.writeAndFlush(sendMessage);
+                }
+            }, "client handler thread").start();
 
 
         }

@@ -2,15 +2,13 @@ package cn.loach.client.protocol;
 
 import cn.loach.client.message.Message;
 import cn.loach.client.serializable.LoachSerializable;
+import com.alibaba.fastjson.JSON;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Slf4j
@@ -23,33 +21,28 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> list) throws UnsupportedEncodingException {
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> list) {
+
         int magicNum = in.readInt();
 
         int version = in.readInt();
 
         int serializerType = in.readInt();
 
-        int messageRequestTypeType = in.readInt();
+        int chatType = in.readInt();
+
+        int messageType = in.readInt();
 
         int length = in.readInt();
         byte[] bytes = new byte[length];
         in.readBytes(bytes, 0, length);
 
         Message message = LoachSerializable
-                .getSerializable(serializableType)
-                .deserialize(Message.messageClassMap.get(messageRequestTypeType), bytes);
+                .getSerializable(serializerType)
+                .deserialize(Message.messageClassMap.get((chatType << 8) | messageType), bytes);
+        log.info("magicNum: {}, version: {}, serializerType: {}, messageType: {}, chatType: {}", magicNum, version, serializerType, messageType, chatType);
+        log.info("data: {}", JSON.toJSONString(message));
 
-
-        log.debug("{}, {}, {}, {}, {}", magicNum, version, serializerType, messageRequestTypeType, length);
-        log.debug("requestMessage: {}", message);
         list.add(message);
-    }
-
-    public static void main(String[] args) {
-        System.out.println((88886652 >> 24) & 0xff );
-        System.out.println((88886652 >> 16) & 0xff );
-        System.out.println((88886652 >> 8) & 0xff );
-        System.out.println((88886652) & 0xff );
     }
 }

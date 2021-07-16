@@ -1,5 +1,6 @@
 package cn.loach.client.service.loginAuth.impl;
 
+import cn.loach.client.enums.MessageContentTypeEnum;
 import cn.loach.client.message.request.LoginAuthRequestMessage;
 import cn.loach.client.service.loginAuth.LoginAuthService;
 
@@ -20,9 +21,10 @@ public class LoginAuthServiceImpl implements LoginAuthService {
     }
 
     @Override
-    public LoginAuthRequestMessage login(String userName) {
+    public LoginAuthRequestMessage login(String token) {
         LoginAuthRequestMessage loginAuthRequestMessage = new LoginAuthRequestMessage();
-        loginAuthRequestMessage.setUserName(userName);
+        loginAuthRequestMessage.setContentType(MessageContentTypeEnum.TEXT);
+        loginAuthRequestMessage.setAuthToken(token);
         return loginAuthRequestMessage;
     }
 }
