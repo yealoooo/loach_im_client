@@ -1,4 +1,4 @@
-package cn.loach.util;
+package cn.loach.client.util;
 
 import java.util.UUID;
 

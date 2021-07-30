@@ -2,15 +2,9 @@ package cn.loach.client.message.request;
 
 import cn.loach.client.enums.MessageContentTypeEnum;
 import cn.loach.client.message.Message;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.io.Serializable;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class RequestMessage extends Message implements Serializable {
 
     /**
@@ -32,4 +26,30 @@ public class RequestMessage extends Message implements Serializable {
         this.contentType = messageContentTypeEnum.ordinal();
     }
 
+    public RequestMessage() {
+    }
+
+    public String getFromUid() {
+        return fromUid;
+    }
+
+    public void setFromUid(String fromUid) {
+        this.fromUid = fromUid;
+    }
+
+    public String getToUid() {
+        return toUid;
+    }
+
+    public void setToUid(String toUid) {
+        this.toUid = toUid;
+    }
+
+    public int getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(int contentType) {
+        this.contentType = contentType;
+    }
 }

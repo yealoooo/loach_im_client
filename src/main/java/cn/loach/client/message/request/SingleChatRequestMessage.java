@@ -2,17 +2,10 @@ package cn.loach.client.message.request;
 
 
 import cn.loach.client.message.Message;
-import cn.loach.util.MessageIdGenerator;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import cn.loach.client.util.MessageIdGenerator;
 
 import java.io.Serializable;
 
-@Getter
-@Setter
-@AllArgsConstructor
 public class SingleChatRequestMessage extends RequestMessage implements Serializable {
     /**
      * 数据体
@@ -49,9 +42,48 @@ public class SingleChatRequestMessage extends RequestMessage implements Serializ
     }
 
     public SingleChatRequestMessage() {
-        setMessageId(MessageIdGenerator.getMessageId());
         setChatType(Message.SINGLE);
         setMessageType(Message.MESSAGE_REQUEST_TYPE);
         setTimeStamp(System.currentTimeMillis());
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getFromNickName() {
+        return fromNickName;
+    }
+
+    public void setFromNickName(String fromNickName) {
+        this.fromNickName = fromNickName;
+    }
+
+    public String getFromAvatar() {
+        return fromAvatar;
+    }
+
+    public void setFromAvatar(String fromAvatar) {
+        this.fromAvatar = fromAvatar;
+    }
+
+    public String getConversationId() {
+        return conversationId;
+    }
+
+    public void setConversationId(String conversationId) {
+        this.conversationId = conversationId;
+    }
+
+    public String getExt() {
+        return ext;
+    }
+
+    public void setExt(String ext) {
+        this.ext = ext;
     }
 }

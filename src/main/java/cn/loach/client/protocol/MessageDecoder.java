@@ -6,12 +6,8 @@ import com.alibaba.fastjson.JSON;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import lombok.extern.slf4j.Slf4j;
-
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-@Slf4j
 public class MessageDecoder extends ByteToMessageDecoder {
 
     /**
@@ -40,9 +36,6 @@ public class MessageDecoder extends ByteToMessageDecoder {
         Message message = LoachSerializable
                 .getSerializable(serializerType)
                 .deserialize(Message.messageClassMap.get((chatType << 8) | messageType), bytes);
-        log.info("magicNum: {}, version: {}, serializerType: {}, messageType: {}, chatType: {}", magicNum, version, serializerType, messageType, chatType);
-        log.info("data: {}", JSON.toJSONString(message));
-
         list.add(message);
     }
 }

@@ -1,12 +1,7 @@
 package cn.loach.client.message.request;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.Serializable;
 
-@Getter
-@Setter
 public class LoginAuthRequestMessage extends RequestMessage implements Serializable {
 
     /**
@@ -17,5 +12,13 @@ public class LoginAuthRequestMessage extends RequestMessage implements Serializa
     public LoginAuthRequestMessage() {
         setChatType(AUTH);
         setMessageType(MESSAGE_REQUEST_TYPE);
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 }

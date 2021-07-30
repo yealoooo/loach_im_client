@@ -2,14 +2,7 @@ package cn.loach.client.message.response;
 
 import cn.loach.client.enums.MessageContentTypeEnum;
 import cn.loach.client.message.Message;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-
-@Getter
-@Setter
-@NoArgsConstructor
 public class ResponseMessage extends Message {
     /**
      * 返回请求结果码
@@ -34,5 +27,40 @@ public class ResponseMessage extends Message {
 
     public void setContentType(MessageContentTypeEnum messageContentTypeEnum) {
         this.contentType = messageContentTypeEnum.ordinal();
+    }
+
+    public ResponseMessage() {
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getResponseMessage() {
+        return responseMessage;
+    }
+
+    public void setResponseMessage(String responseMessage) {
+        this.responseMessage = responseMessage;
+    }
+
+    public boolean isRequestFlag() {
+        return requestFlag;
+    }
+
+    public void setRequestFlag(boolean requestFlag) {
+        this.requestFlag = requestFlag;
+    }
+
+    public int getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(int contentType) {
+        this.contentType = contentType;
     }
 }

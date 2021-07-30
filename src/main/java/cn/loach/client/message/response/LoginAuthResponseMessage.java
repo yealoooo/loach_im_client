@@ -1,17 +1,11 @@
 package cn.loach.client.message.response;
 
 import cn.loach.client.enums.MessageContentTypeEnum;
-import cn.loach.util.MessageIdGenerator;
-import lombok.Getter;
-import lombok.Setter;
+import cn.loach.client.util.MessageIdGenerator;
 
 import java.io.Serializable;
 
-import static cn.loach.client.message.Message.AUTH;
-import static cn.loach.client.message.Message.MESSAGE_RESPONSE_TYPE;
 
-@Getter
-@Setter
 public class LoginAuthResponseMessage extends ResponseMessage implements Serializable {
 
     private String content;
@@ -22,5 +16,13 @@ public class LoginAuthResponseMessage extends ResponseMessage implements Seriali
         setTimeStamp(System.currentTimeMillis());
         setChatType(AUTH);
         setMessageType(MESSAGE_RESPONSE_TYPE);
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

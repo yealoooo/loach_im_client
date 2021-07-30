@@ -1,12 +1,9 @@
 package cn.loach.client.service.singleMessage.impl;
 
-import cn.loach.client.enums.MessageContentTypeEnum;
 import cn.loach.client.message.request.SingleChatRequestMessage;
 import cn.loach.client.service.singleMessage.SingleMessageService;
 
-import java.util.UUID;
-
-public class SingleMessageServiceIMpl implements SingleMessageService {
+public class SingleMessageServiceIMpl implements SingleMessageService{
 
     private static volatile SingleMessageServiceIMpl singleMessageServiceIMpl;
 

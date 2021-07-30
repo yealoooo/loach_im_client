@@ -4,19 +4,11 @@ import cn.loach.client.message.request.LoginAuthRequestMessage;
 import cn.loach.client.message.request.SingleChatRequestMessage;
 import cn.loach.client.message.response.LoginAuthResponseMessage;
 import cn.loach.client.message.response.SingleChatResponseMessage;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
 public abstract class Message implements Serializable {
 
     /**
@@ -82,5 +74,41 @@ public abstract class Message implements Serializable {
         // 群组
 //        messageClassMap.put((GROUP << 8) | MESSAGE_REQUEST_TYPE, SingleChatRequestMessage.class);
 //        messageClassMap.put((GROUP << 8) | MESSAGE_RESPONSE_TYPE, SingleChatResponseMessage.class);
+    }
+
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public int getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(int messageType) {
+        this.messageType = messageType;
+    }
+
+    public int getChatType() {
+        return chatType;
+    }
+
+    public void setChatType(int chatType) {
+        this.chatType = chatType;
+    }
+
+    public Message() {
     }
 }

@@ -1,4 +1,4 @@
-package cn.loach.util;
+package cn.loach.client.util;
 
 public class StringUtil {
 
