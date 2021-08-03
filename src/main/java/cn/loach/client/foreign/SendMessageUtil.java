@@ -8,7 +8,7 @@ public class SendMessageUtil {
 
     private static ChannelHandlerContext ctx;
 
-    protected static void setCtx(ChannelHandlerContext ctx) {
+    public static void setCtx(ChannelHandlerContext ctx) {
         SendMessageUtil.ctx = ctx;
     }
 

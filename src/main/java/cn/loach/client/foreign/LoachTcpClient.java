@@ -1,9 +1,7 @@
 package cn.loach.client.foreign;
 
 import cn.loach.client.exceptions.LoachException;
-import cn.loach.client.foreign.callback.LoachResponseCallback;
-import cn.loach.client.foreign.callback.LoginAuthMessageCallBack;
-import cn.loach.client.foreign.callback.SingleResponseMessageCallBack;
+import cn.loach.client.foreign.callback.*;
 import cn.loach.client.handler.LengthFieldFrameProtocolHandler;
 import cn.loach.client.handler.LoginAuthResponseHandler;
 import cn.loach.client.handler.SingleMessageResponseHandler;
@@ -44,14 +42,12 @@ public class LoachTcpClient implements Runnable {
     private LoachTcpClient(String host,
                            int port,
                            String token,
-                           LoachResponseCallback<SingleChatResponseMessage> singleResponseMessageCallback,
-                           LoachResponseCallback<LoginAuthResponseMessage> loginAuthMessageCallBack) {
+                           LoachClientCallback loachClientCallback) {
         this.host = host;
         this.port = port;
         this.token = token;
 
-        CallBackSession.setSingleResponseMessageCallback(singleResponseMessageCallback);
-        CallBackSession.setLoginAuthCallback(loginAuthMessageCallBack);
+        CallBackContainer.setLoachClientCallback(loachClientCallback);
     }
 
     @Override
@@ -73,6 +69,7 @@ public class LoachTcpClient implements Runnable {
                         public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
                             ctx.close();
                             logger.error("连接时异常: ", cause.getMessage(), cause.getCause());
+                            CallBackContainer.onException(new LoachException("链接异常，异常信息：" + cause.getMessage()));
                         }
                     });
                     ch.pipeline().addLast(new LoginAuthResponseHandler());
@@ -87,16 +84,16 @@ public class LoachTcpClient implements Runnable {
                         @Override
                         public void channelUnregistered(ChannelHandlerContext ctx) {
                             ctx.fireChannelUnregistered();
-                            throw new LoachException("断开连接");
+                            CallBackContainer.onClose("断开连接");
                         }
                         @Override
                         public void handlerRemoved(ChannelHandlerContext ctx) {
                             try {
                                 super.handlerRemoved(ctx);
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                CallBackContainer.onException(new LoachException("初始化连接失败：" + e.getMessage()));
+                                CallBackContainer.onClose("初始化连接失败：" + e.getMessage() + "----断开连接");
                             }
-                            throw new LoachException("初始化连接失败");
                         }
                     });
 
@@ -124,9 +121,7 @@ public class LoachTcpClient implements Runnable {
 
         private String token;
 
-        private LoachResponseCallback<SingleChatResponseMessage> singleResponseMessageCallback;
-
-        private LoachResponseCallback<LoginAuthResponseMessage> loginAuthMessageCallBack;
+        private LoachClientCallback loachClientCallback;
 
         private CreateConnection() {
         }
@@ -146,13 +141,8 @@ public class LoachTcpClient implements Runnable {
             return this;
         }
 
-        public CreateConnection singleResponseMessageCallback(SingleResponseMessageCallBack singleResponseMessageCallback) {
-            this.singleResponseMessageCallback = singleResponseMessageCallback;
-            return this;
-        }
-
-        public CreateConnection loginAuthMessageCallBack(LoginAuthMessageCallBack loginAuthMessageCallBack) {
-            this.loginAuthMessageCallBack = loginAuthMessageCallBack;
+        public CreateConnection loachClientCallBack(LoachClientCallback loachClientCallback) {
+            this.loachClientCallback = loachClientCallback;
             return this;
         }
 
@@ -161,10 +151,10 @@ public class LoachTcpClient implements Runnable {
                 throw new LoachException("host is null");
             }else if (StringUtil.isEmpty(this.token)) {
                 throw new LoachException("token is null");
-            }else if (null == this.loginAuthMessageCallBack) {
-                throw new LoachException("loginAuthCallBack is null");
+            }else if (null == this.loachClientCallback) {
+                throw new LoachException("loachClientCallback is null");
             }
-            LoachTcpClient loachTcpClient = new LoachTcpClient(this.host, this.port, this.token, this.singleResponseMessageCallback, this.loginAuthMessageCallBack);
+            LoachTcpClient loachTcpClient = new LoachTcpClient(this.host, this.port, this.token, this.loachClientCallback);
             new Thread(loachTcpClient).start();
         }
     }

@@ -225,7 +225,7 @@ public class LoachHttpUtil {
      */
     private static void writeFile(String paramName, File file, String boundary,
                                   DataOutputStream out) {
-        try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+        try (InputStream inputStream = (new FileInputStream(file))) {
             /**
              * 写分隔符--${boundary}，并回车换行
              */
@@ -242,9 +242,11 @@ public class LoachHttpUtil {
             String contentType = "Content-Type: application/octet-stream" + LINE_END + LINE_END;
             out.write(contentType.getBytes());
 
-            String line;
-            while ((line = fileReader.readLine()) != null) {
-                out.write(line.getBytes());
+            int bufSize = 2048;
+            byte[] buffer = new byte[2048];
+            int len;
+            while (-1 != (len = inputStream.read(buffer, 0, bufSize))) {
+                out.write(buffer, 0, len);
             }
             //回车换行
             out.write(LINE_END.getBytes());
